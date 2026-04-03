@@ -2,11 +2,13 @@
   "name": "apex-api",
   "version": "1.0.0",
   "description": "APEX Azure Functions API",
-  "main": "index.js",
+  "main": "src/functions/index.js",
   "scripts": {
     "start": "func start"
   },
   "dependencies": {
-    "@azure/cosmos": "^4.0.0"
+    "@azure/cosmos": "^4.0.0",
+    "@azure/functions": "^4.0.0",
+    "uuid": "^9.0.0"
   }
 }

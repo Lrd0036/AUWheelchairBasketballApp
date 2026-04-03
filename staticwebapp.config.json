@@ -6,5 +6,8 @@
   "navigationFallback": {
     "rewrite": "/index.html",
     "exclude": ["/api/*", "/_framework/*", "/assets/*"]
+  },
+  "platform": {
+    "apiRuntime": "node:20"
   }
 }

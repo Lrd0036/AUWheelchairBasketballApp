@@ -22,4 +22,8 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: upload
           app_location: "/"
+          api_location: "api"
           output_location: "dist"
+        env:
+          COSMOS_CONNECTION_STRING: ${{ secrets.COSMOS_CONNECTION_STRING }}
+          COSMOS_DATABASE: apex

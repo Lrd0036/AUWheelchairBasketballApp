@@ -1,0 +1,12 @@
+{
+  "name": "apex-api",
+  "version": "1.0.0",
+  "description": "APEX Azure Functions API",
+  "main": "index.js",
+  "scripts": {
+    "start": "func start"
+  },
+  "dependencies": {
+    "@azure/cosmos": "^4.0.0"
+  }
+}

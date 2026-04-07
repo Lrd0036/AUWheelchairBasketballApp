@@ -7,8 +7,8 @@
     "start": "func start"
   },
   "dependencies": {
-    "@azure/cosmos": "^4.0.0",
     "@azure/functions": "^4.0.0",
+    "better-sqlite3": "^12.8.0",
     "uuid": "^9.0.0"
   }
 }

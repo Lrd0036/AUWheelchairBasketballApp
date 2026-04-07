@@ -1,5 +1,5 @@
 const { app } = require("@azure/functions");
-const { getContainer } = require("./cosmosClient");
+const { getContainer } = require("./db");
 const { v4: uuidv4 } = require("uuid");
 
 // ─── CORS helper ───────────────────────────────────────────────────────────

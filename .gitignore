@@ -12,6 +12,10 @@ dist
 !.env.example
 api/local.settings.json
 
+# SQLite database
+api/data/
+data/
+
 # Azure
 .azure
 .azurite

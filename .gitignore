@@ -1,5 +1,31 @@
+# Dependencies
 node_modules
+api/node_modules
+
+# Build output
 dist
+.output
+
+# Environment & secrets
 .env
-*.local
+.env.*
+!.env.example
+api/local.settings.json
+
+# Azure
+.azure
+.azurite
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json
+*.local
+
+

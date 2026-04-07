@@ -36,7 +36,7 @@ export function getZoneLabel(zone) {
 const BASKET_X = 50;
 const BASKET_Y = 88;
 
-export default function CourtMap({ onShotClick, shots = [], opponentShots = [], showHeatMap = false, readOnly = false }) {
+export default function CourtMap({ onShotClick = null, shots = [], opponentShots = [], showHeatMap = false, readOnly = false }) {
   const svgRef = useRef(null);
   const [hovering, setHovering] = useState(false);
 

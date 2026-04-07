@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: apex-api
+    ports:
+      - "7071:7071"
+    environment:
+      COSMOS_CONNECTION_STRING: ${COSMOS_CONNECTION_STRING}
+      COSMOS_DATABASE: apex
+      AzureWebJobsStorage: UseDevelopmentStorage=true
+    networks:
+      - apex-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7071/api/games"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+  app:
+    container_name: apex-app
+    ports:
+      - "80:80"
+    environment:
+      - VITE_API_BASE_URL=/api
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - apex-network
+    restart: unless-stopped
+
+networks:
+  apex-network:
+    driver: bridge

@@ -61,12 +61,22 @@ export default function LiveGame() {
 
   const createEvent = useMutation({
     mutationFn: (data) => api.entities.Event.create(data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["events"] }),
+    onSuccess: (newEvent) => {
+      if (activeGame?.id) {
+        queryClient.setQueryData(["events", activeGame.id], (/** @type {any[]} */ old = []) => [...old, newEvent]);
+        queryClient.invalidateQueries({ queryKey: ["events", activeGame.id] });
+      }
+    },
   });
 
   const undoEvent = useMutation({
     mutationFn: (id) => api.entities.Event.delete(id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["events"] }),
+    onSuccess: (deletedId) => {
+      if (activeGame?.id) {
+        queryClient.setQueryData(["events", activeGame.id], (/** @type {any[]} */ old = []) => old.filter(ev => ev.id !== deletedId));
+        queryClient.invalidateQueries({ queryKey: ["events", activeGame.id] });
+      }
+    },
   });
 
   const updateGame = useMutation({
@@ -156,7 +166,7 @@ export default function LiveGame() {
 
   const handleUndo = () => {
     if (isReadOnly || events.length === 0) return;
-    const sorted = [...events].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    const sorted = [...events].sort((a, b) => +new Date(b.timestamp) - +new Date(a.timestamp));
     undoEvent.mutate(sorted[0].id);
   };
 
@@ -365,7 +375,7 @@ export default function LiveGame() {
           <div className="bg-card border border-border rounded-2xl p-4">
             <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold mb-2">Event Log</p>
             <div className="space-y-1.5 max-h-52 overflow-y-auto">
-              {[...events].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).map(ev => {
+              {[...events].sort((a, b) => +new Date(b.timestamp) - +new Date(a.timestamp)).map(ev => {
                 const p = players.find(pl => pl.id === ev.player_id);
                 const oppP = ev.is_opponent ? oppPlayers.find(op => op.id === ev.player_id) : null;
                 return (
@@ -432,7 +442,7 @@ export default function LiveGame() {
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold mb-2">Recent</p>
               <div className="space-y-1.5 max-h-52 overflow-y-auto">
                 {[...events]
-                  .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+                  .sort((a, b) => +new Date(b.timestamp) - +new Date(a.timestamp))
                   .slice(0, 10)
                   .map(ev => {
                     const p = players.find(pl => pl.id === ev.player_id);

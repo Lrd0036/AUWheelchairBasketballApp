@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 export default function Games() {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState(null);
-  const [form, setForm] = useState({ date: "", opponent: "", location: "", status: "upcoming" });
+  const [form, setForm] = useState({ date: new Date().toLocaleDateString("en-CA"), opponent: "", location: "", status: "upcoming" });
   const queryClient = useQueryClient();
 
   const { data: games = [] } = useQuery({
@@ -37,7 +37,7 @@ export default function Games() {
   });
 
   const resetForm = () => {
-    setForm({ date: "", opponent: "", location: "", status: "upcoming" });
+    setForm({ date: new Date().toLocaleDateString("en-CA"), opponent: "", location: "", status: "upcoming" });
     setEditing(null);
     setOpen(false);
   };
